@@ -1,8 +1,6 @@
 @import "tailwindcss";
-@import "flowbite";
 
 @source "./app/views/**/*.html.erb";
 @source "./app/helpers/**/*.rb";
 @source "./app/assets/javascripts/**/*.js";
 @source "./app/javascript/**/*.js";
-@source "./node_modules/flowbite/**/*.js";
