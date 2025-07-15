@@ -28,11 +28,28 @@ class CompareController < ApplicationController
     compare_list.delete(model_id)
     session[:compare_list] = compare_list
     
-    redirect_back(fallback_location: compare_path, notice: '비교 목록에서 제거되었습니다.')
+    # Turbo 응답 처리
+    respond_to do |format|
+      format.html { redirect_back(fallback_location: compare_path, notice: '비교 목록에서 제거되었습니다.') }
+      format.turbo_stream { 
+        @compare_list = session[:compare_list] || []
+        @models = Model.includes(:brand).where(id: @compare_list)
+        render turbo_stream: turbo_stream.replace("compare_content", partial: "compare/index")
+      }
+    end
   end
 
   def clear
     session[:compare_list] = []
-    redirect_to compare_path, notice: '비교 목록이 초기화되었습니다.'
+    
+    # Turbo 응답 처리
+    respond_to do |format|
+      format.html { redirect_to compare_path, notice: '비교 목록이 초기화되었습니다.' }
+      format.turbo_stream { 
+        @compare_list = session[:compare_list] || []
+        @models = Model.includes(:brand).where(id: @compare_list)
+        render turbo_stream: turbo_stream.replace("compare_content", partial: "compare/index")
+      }
+    end
   end
 end
