@@ -1,0 +1,42 @@
+# MyBikes 프로젝트 구조 가이드
+
+## 주요 파일 및 디렉토리
+
+### 컨트롤러
+- [app/controllers/application_controller.rb](mdc:app/controllers/application_controller.rb) - 기본 컨트롤러
+- [app/controllers/home_controller.rb](mdc:app/controllers/home_controller.rb) - 홈 컨트롤러
+- [app/controllers/brands_controller.rb](mdc:app/controllers/brands_controller.rb) - 브랜드 컨트롤러 (생성 예정)
+- [app/controllers/models_controller.rb](mdc:app/controllers/models_controller.rb) - 모델 컨트롤러 (생성 예정)
+
+### 뷰
+- [app/views/layouts/application.html.erb](mdc:app/views/layouts/application.html.erb) - 메인 레이아웃
+- [app/views/home/index.html.erb](mdc:app/views/home/index.html.erb) - 홈페이지
+- [app/views/brands/](mdc:app/views/brands/) - 브랜드 관련 뷰
+- [app/views/models/](mdc:app/views/models/) - 모델 관련 뷰
+
+### 모델
+- [app/models/application_record.rb](mdc:app/models/application_record.rb) - 기본 모델
+- [app/models/brand.rb](mdc:app/models/brand.rb) - 브랜드 모델 (생성 예정)
+- [app/models/model.rb](mdc:app/models/model.rb) - 모델 모델 (생성 예정)
+
+### 설정 파일
+- [config/routes.rb](mdc:config/routes.rb) - 라우팅 설정
+- [config/database.yml](mdc:config/database.yml) - 데이터베이스 설정
+- [Gemfile](mdc:Gemfile) - 의존성 관리
+- [PRD.md](mdc:PRD.md) - 프로젝트 요구사항 문서
+
+### 스타일 및 자바스크립트
+- [app/assets/stylesheets/application.css](mdc:app/assets/stylesheets/application.css) - 메인 CSS
+- [app/assets/stylesheets/tailwind/application.css](mdc:app/assets/stylesheets/tailwind/application.css) - Tailwind CSS
+- [app/javascript/application.js](mdc:app/javascript/application.js) - 메인 JavaScript
+- [app/javascript/controllers/](mdc:app/javascript/controllers/) - Stimulus 컨트롤러
+
+## 개발 가이드라인
+- 모든 새로운 기능은 PRD.md의 요구사항을 따름
+- Tailwind CSS와 Flowbite를 사용하여 UI 구현
+- Stimulus를 사용하여 JavaScript 기능 구현
+- 반응형 디자인을 우선적으로 고려
+description:
+globs:
+alwaysApply: false
+---

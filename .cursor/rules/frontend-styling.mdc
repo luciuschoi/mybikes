@@ -1,0 +1,109 @@
+# 프론트엔드 스타일링 가이드라인
+
+## Tailwind CSS 사용 규칙
+- 유틸리티 클래스 우선 사용
+- 커스텀 CSS는 최소화
+- 반응형 디자인을 위한 브레이크포인트 활용
+- 다크모드 지원을 위한 dark: 접두사 사용
+
+```html
+<!-- 기본 카드 컴포넌트 -->
+<div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
+  <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">제목</h3>
+  <p class="text-gray-600 dark:text-gray-300">내용</p>
+</div>
+
+<!-- 반응형 그리드 -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  <!-- 그리드 아이템들 -->
+</div>
+```
+
+## Flowbite 컴포넌트 활용
+- 버튼, 카드, 모달 등 Flowbite 컴포넌트 사용
+- 데이터 속성을 활용한 인터랙션 구현
+- 접근성을 고려한 ARIA 속성 추가
+
+```html
+<!-- Flowbite 버튼 -->
+<button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5">
+  기본 버튼
+</button>
+
+<!-- Flowbite 모달 -->
+<button data-modal-target="default-modal" data-modal-toggle="default-modal" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+  모달 열기
+</button>
+```
+
+## 반응형 디자인 원칙
+- 모바일 퍼스트 접근법
+- 터치 친화적인 인터페이스
+- 적절한 여백과 타이포그래피
+- 로딩 상태와 에러 상태 고려
+
+```css
+/* 커스텀 CSS (필요시만) */
+.custom-card {
+  @apply bg-white rounded-lg shadow-md p-6;
+}
+
+.custom-button {
+  @apply bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded;
+}
+```
+
+## 다크모드 지원
+- 시스템 설정에 따른 자동 전환
+- 사용자 선택 옵션 제공
+- 일관된 색상 팔레트 사용
+
+```html
+<!-- 다크모드 토글 버튼 -->
+<button id="theme-toggle" class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">
+  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+    <!-- 아이콘 -->
+  </svg>
+</button>
+```
+
+## 애니메이션 및 전환
+- 부드러운 전환 효과
+- 성능을 고려한 애니메이션
+- 사용자 경험 향상을 위한 마이크로 인터랙션
+
+```html
+<!-- 호버 효과 -->
+<div class="transform transition-transform duration-200 hover:scale-105">
+  <!-- 콘텐츠 -->
+</div>
+
+<!-- 페이드 인 애니메이션 -->
+<div class="opacity-0 animate-fade-in">
+  <!-- 콘텐츠 -->
+</div>
+```
+
+## 접근성 고려사항
+- 시맨틱 HTML 구조
+- 키보드 네비게이션 지원
+- 스크린 리더 호환성
+- 충분한 색상 대비
+
+```html
+<!-- 접근성을 고려한 구조 -->
+<main role="main">
+  <section aria-labelledby="brands-heading">
+    <h2 id="brands-heading" class="text-2xl font-bold">브랜드 목록</h2>
+    <div role="list">
+      <div role="listitem" tabindex="0">
+        <!-- 브랜드 카드 -->
+      </div>
+    </div>
+  </section>
+</main>
+```
+description:
+globs:
+alwaysApply: false
+---

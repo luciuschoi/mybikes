@@ -1,0 +1,106 @@
+# Rails 개발 가이드라인
+
+## 컨트롤러 작성 규칙
+- 컨트롤러는 RESTful 원칙을 따름
+- 액션은 간결하고 읽기 쉽게 작성
+- 인증/권한 체크는 before_action 사용
+- 에러 처리는 rescue_from 사용
+
+```ruby
+class BrandsController < ApplicationController
+  before_action :set_brand, only: [:show, :edit, :update, :destroy]
+  
+  def index
+    @brands = Brand.all
+  end
+  
+  def show
+  end
+  
+  private
+  
+  def set_brand
+    @brand = Brand.find(params[:id])
+  end
+end
+```
+
+## 모델 작성 규칙
+- validates를 사용한 데이터 검증
+- scope를 사용한 쿼리 메서드 정의
+- has_many, belongs_to 관계 정의
+- JSON 필드 사용 시 serialize 고려
+
+```ruby
+class Brand < ApplicationRecord
+  has_many :models, dependent: :destroy
+  
+  validates :name, presence: true, uniqueness: true
+  validates :founded_year, numericality: { greater_than: 1800 }
+  
+  scope :motorcycles, -> { where(category: 'motorcycle') }
+  scope :bicycles, -> { where(category: 'bicycle') }
+end
+```
+
+## 뷰 작성 규칙
+- ERB 템플릿에서 HTML 구조 명확히
+- Tailwind CSS 클래스 사용
+- 조건부 렌더링은 if/unless 사용
+- 반복문은 each 사용
+
+```erb
+<div class="container mx-auto px-4">
+  <% @brands.each do |brand| %>
+    <div class="bg-white rounded-lg shadow-md p-6 mb-4">
+      <h2 class="text-xl font-bold"><%= brand.name %></h2>
+      <p class="text-gray-600"><%= brand.description %></p>
+    </div>
+  <% end %>
+</div>
+```
+
+## 라우팅 규칙
+- RESTful 라우트 사용
+- 중첩 라우트 적절히 활용
+- 루트 페이지 명확히 설정
+
+```ruby
+Rails.application.routes.draw do
+  root 'home#index'
+  
+  resources :brands do
+    resources :models, only: [:index, :show]
+  end
+  
+  resources :models, only: [:index, :show]
+end
+```
+
+## 데이터베이스 마이그레이션
+- 의미있는 컬럼명 사용
+- 인덱스 적절히 설정
+- 외래키 제약조건 설정
+
+```ruby
+class CreateBrands < ActiveRecord::Migration[8.0]
+  def change
+    create_table :brands do |t|
+      t.string :name, null: false
+      t.text :description
+      t.integer :founded_year
+      t.string :country
+      t.string :category
+      
+      t.timestamps
+    end
+    
+    add_index :brands, :name, unique: true
+    add_index :brands, :category
+  end
+end
+```
+description:
+globs:
+alwaysApply: false
+---
