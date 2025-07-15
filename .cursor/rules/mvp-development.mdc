@@ -82,6 +82,19 @@ rails db:migrate
 rails db:seed
 ```
 
+### 서버 관리
+```bash
+# 개발 서버 시작 (Tailwind CSS 컴파일 포함)
+bin/dev
+
+# 서버 재시작 (설정 변경 후)
+# 외부 터미널에서 Ctrl+C로 중지 후 bin/dev 재실행
+
+# 마이그레이션 후 재시작
+rails db:migrate
+# 외부 터미널에서 bin/dev 재실행
+```
+
 ### 배포
 ```bash
 heroku create mybikes-mvp

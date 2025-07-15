@@ -1,0 +1,120 @@
+<!-- 페이지 헤더 -->
+<div class="mb-8">
+  <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">브랜드 목록</h1>
+  <p class="text-gray-600 dark:text-gray-300">세계 유명 오토바이 및 자전거 브랜드들을 둘러보세요.</p>
+</div>
+
+<!-- 검색 및 필터 -->
+<div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-8">
+  <form method="get" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div>
+      <label for="search" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">검색</label>
+      <input type="text" name="search" id="search" value="<%= params[:search] %>" 
+             placeholder="브랜드명으로 검색..." 
+             class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+    </div>
+    <div>
+      <label for="category" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">카테고리</label>
+      <select name="category" id="category" 
+              class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+        <option value="">전체</option>
+        <option value="motorcycle" <%= 'selected' if params[:category] == 'motorcycle' %>>오토바이</option>
+        <option value="bicycle" <%= 'selected' if params[:category] == 'bicycle' %>>자전거</option>
+      </select>
+    </div>
+    <div class="flex items-end">
+      <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+        검색
+      </button>
+    </div>
+  </form>
+</div>
+
+<!-- 브랜드 그리드 -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  <% @brands.each do |brand| %>
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+      <div class="p-6">
+        <!-- 브랜드 헤더 -->
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white"><%= brand.name %></h3>
+          <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-xs">
+            <%= brand.category == 'motorcycle' ? '오토바이' : '자전거' %>
+          </span>
+        </div>
+        
+        <!-- 브랜드 정보 -->
+        <p class="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-3"><%= brand.description %></p>
+        
+        <!-- 브랜드 상세 정보 -->
+        <div class="space-y-2 mb-4">
+          <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">
+            <span class="font-medium">국가:</span>
+            <span class="ml-2"><%= brand.country %></span>
+          </div>
+          <% if brand.founded_year %>
+            <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">
+              <span class="font-medium">설립연도:</span>
+              <span class="ml-2"><%= brand.founded_year %></span>
+            </div>
+          <% end %>
+          <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">
+            <span class="font-medium">모델 수:</span>
+            <span class="ml-2"><%= brand.models.count %>개</span>
+          </div>
+        </div>
+        
+        <!-- 액션 버튼 -->
+        <div class="flex space-x-2">
+          <a href="<%= brand_path(brand) %>" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white text-center px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+            자세히 보기
+          </a>
+          <a href="<%= brand_models_path(brand) %>" class="flex-1 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 text-center px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+            모델 보기
+          </a>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<!-- 결과가 없을 때 -->
+<% if @brands.empty? %>
+  <div class="text-center py-12">
+    <div class="text-gray-400 dark:text-gray-500 mb-4">
+      <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.47-.881-6.08-2.33"></path>
+      </svg>
+    </div>
+    <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">검색 결과가 없습니다</h3>
+    <p class="text-gray-600 dark:text-gray-300">다른 검색어나 필터를 시도해보세요.</p>
+  </div>
+<% end %>
+
+<!-- 페이지네이션 (필요시) -->
+<% if @brands.respond_to?(:current_page) && @brands.total_pages > 1 %>
+  <div class="mt-8 flex justify-center">
+    <nav class="flex space-x-2">
+      <% if @brands.previous_page %>
+        <a href="<%= brands_path(page: @brands.previous_page, search: params[:search], category: params[:category]) %>" 
+           class="px-3 py-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
+          이전
+        </a>
+      <% end %>
+      
+      <% @brands.total_pages.times do |page| %>
+        <a href="<%= brands_path(page: page + 1, search: params[:search], category: params[:category]) %>" 
+           class="px-3 py-2 <%= page + 1 == @brands.current_page ? 'bg-blue-600 text-white' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300' %> rounded">
+          <%= page + 1 %>
+        </a>
+      <% end %>
+      
+      <% if @brands.next_page %>
+        <a href="<%= brands_path(page: @brands.next_page, search: params[:search], category: params[:category]) %>" 
+           class="px-3 py-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
+          다음
+        </a>
+      <% end %>
+    </nav>
+  </div>
+<% end %>

@@ -100,6 +100,26 @@ class CreateBrands < ActiveRecord::Migration[8.0]
   end
 end
 ```
+
+## 서버 관리 및 개발 워크플로우
+
+### 서버 실행 안내
+코드 변경 후 서버를 재시작해야 할 때는 **외부 터미널에서 다음 명령을 실행**하세요:
+
+```bash
+# 기존 서버 중지 (Ctrl+C)
+# 개발 서버 재시작
+bin/dev
+```
+
+### 자동 리로드 vs 수동 재시작
+- **자동 리로드**: 뷰, 컨트롤러, 모델 변경은 자동으로 반영
+- **수동 재시작 필요**: 설정 파일, 마이그레이션, Gemfile 변경 시
+
+### 개발 팁
+- `bin/dev` 명령은 Tailwind CSS 컴파일과 Rails 서버를 동시에 실행
+- 코드 변경 시 브라우저에서 새로고침하여 변경사항 확인
+- 에러 발생 시 터미널 로그 확인 후 서버 재시작
 description:
 globs:
 alwaysApply: false

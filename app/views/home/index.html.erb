@@ -1,66 +1,112 @@
-<div class="container mx-auto px-4 py-8">
-  <h1 class="text-3xl font-bold text-gray-900 mb-8">Rails 8 + Tailwind CSS 4 + Flowbite 프로젝트</h1>
-  
-  <!-- Flowbite 버튼 예시 -->
-  <div class="mb-8">
-    <h2 class="text-xl font-semibold mb-4">Flowbite 버튼 예시</h2>
-    <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">기본 버튼</button>
-    <button type="button" class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">대체 버튼</button>
-  </div>
-  
-  <!-- Flowbite 모달 예시 -->
-  <div class="mb-8">
-    <h2 class="text-xl font-semibold mb-4">Flowbite 모달 예시</h2>
-    <button data-modal-target="default-modal" data-modal-toggle="default-modal" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
-      모달 열기
-    </button>
-
-    <!-- 모달 -->
-    <div id="default-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-        <div class="relative p-4 w-full max-w-2xl max-h-full">
-            <!-- 모달 내용 -->
-            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                <!-- 모달 헤더 -->
-                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                        기본 모달
-                    </h3>
-                    <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="default-modal">
-                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                        </svg>
-                        <span class="sr-only">모달 닫기</span>
-                    </button>
-                </div>
-                <!-- 모달 바디 -->
-                <div class="p-4 md:p-5 space-y-4">
-                    <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                        이것은 Flowbite 모달 예시입니다. Rails 8, Tailwind CSS 4, 그리고 Flowbite가 제대로 작동하고 있습니다.
-                    </p>
-                    <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                        SQLite3 데이터베이스, importmap, 그리고 propshaft를 사용하여 자원을 관리하고 있습니다.
-                    </p>
-                </div>
-                <!-- 모달 푸터 -->
-                <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                    <button data-modal-hide="default-modal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">수락</button>
-                    <button data-modal-hide="default-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">거부</button>
-                </div>
-            </div>
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+  <!-- 히어로 섹션 -->
+  <div class="bg-gradient-to-br from-blue-700 via-blue-800 to-purple-800 dark:from-blue-900 dark:via-purple-900 dark:to-indigo-900 text-white py-16 rounded-lg mb-12 shadow-xl relative overflow-hidden">
+    <!-- 배경 패턴 -->
+    <div class="absolute inset-0 bg-gradient-to-r from-blue-600/40 to-purple-600/40 dark:from-blue-800/50 dark:to-purple-800/50"></div>
+    <!-- 추가 배경 효과 -->
+    <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent dark:from-black/30 dark:to-transparent"></div>
+          <div class="relative z-10 text-center">
+        <h1 class="text-4xl md:text-6xl font-bold mb-4 text-white drop-shadow-lg dark:drop-shadow-xl">MyBikes</h1>
+        <p class="text-xl md:text-2xl mb-8 text-white drop-shadow-md dark:drop-shadow-lg">세계 유명 오토바이 및 자전거 브랜드 정보 포탈</p>
+              <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="<%= brands_path %>" class="bg-white dark:bg-gray-800 text-blue-600 dark:text-blue-400 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors shadow-lg">
+            브랜드 둘러보기
+          </a>
+          <a href="<%= models_path %>" class="bg-white/10 dark:bg-gray-800/20 backdrop-blur-sm border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 dark:hover:bg-gray-700 dark:hover:text-blue-300 transition-colors shadow-lg">
+            모델 검색하기
+          </a>
         </div>
     </div>
   </div>
-  
-  <!-- 프로젝트 설정 정보 -->
-  <div class="bg-gray-100 rounded-lg p-6">
-    <h2 class="text-xl font-semibold mb-4">프로젝트 설정</h2>
-    <ul class="space-y-2 text-gray-700">
-      <li>✅ Rails 8</li>
-      <li>✅ Tailwind CSS 4</li>
-      <li>✅ Flowbite Plugin</li>
-      <li>✅ SQLite3 Database</li>
-      <li>✅ Importmap</li>
-      <li>✅ Propshaft</li>
-    </ul>
+
+<!-- 통계 섹션 -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 text-center">
+    <div class="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2"><%= Brand.count %></div>
+    <div class="text-gray-700 dark:text-gray-300 font-medium">등록된 브랜드</div>
   </div>
+  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 text-center">
+    <div class="text-3xl font-bold text-green-600 dark:text-green-400 mb-2"><%= Model.count %></div>
+    <div class="text-gray-700 dark:text-gray-300 font-medium">등록된 모델</div>
+  </div>
+  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 text-center">
+    <div class="text-3xl font-bold text-purple-600 dark:text-purple-400 mb-2">2</div>
+    <div class="text-gray-700 dark:text-gray-300 font-medium">카테고리</div>
+  </div>
+</div>
+
+<!-- 인기 브랜드 섹션 -->
+<div class="mb-12">
+  <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">인기 브랜드</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <% Brand.limit(6).each do |brand| %>
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+        <div class="p-6">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2"><%= brand.name %></h3>
+          <p class="text-gray-700 dark:text-gray-300 text-sm mb-4 leading-relaxed"><%= brand.description %></p>
+          <div class="flex items-center justify-between">
+            <span class="text-sm text-gray-600 dark:text-gray-400 font-medium"><%= brand.country %></span>
+            <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-xs font-medium">
+              <%= brand.category == 'motorcycle' ? '오토바이' : '자전거' %>
+            </span>
+          </div>
+          <a href="<%= brand_path(brand) %>" class="block mt-4 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium">
+            자세히 보기 →
+          </a>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<!-- 최신 모델 섹션 -->
+<div class="mb-12">
+  <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">최신 모델</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <% Model.includes(:brand).recent.limit(8).each do |model| %>
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+        <div class="p-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs text-gray-600 dark:text-gray-400 font-medium"><%= model.brand.name %></span>
+            <span class="text-xs text-gray-600 dark:text-gray-400 font-medium"><%= model.year %></span>
+          </div>
+          <h3 class="font-semibold text-gray-900 dark:text-white mb-2"><%= model.name %></h3>
+          <div class="flex items-center justify-between">
+            <span class="text-sm text-gray-700 dark:text-gray-300 font-medium">
+              <%= model.price_formatted %>
+            </span>
+            <span class="px-2 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded text-xs font-medium">
+              <%= model.category == 'motorcycle' ? '오토바이' : '자전거' %>
+            </span>
+          </div>
+          <a href="<%= model_path(model) %>" class="block mt-3 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 text-sm font-medium">
+            상세 정보 →
+          </a>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<!-- 카테고리별 안내 -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">🏍️ 오토바이</h3>
+    <p class="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">
+      스포츠 바이크부터 크루저까지, 다양한 오토바이 브랜드와 모델을 만나보세요.
+    </p>
+    <a href="<%= models_path(category: 'motorcycle') %>" class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium">
+      오토바이 모델 보기 →
+    </a>
+  </div>
+  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">🚴 자전거</h3>
+    <p class="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">
+      로드 바이크부터 MTB까지, 최고의 자전거 브랜드와 모델을 확인하세요.
+    </p>
+    <a href="<%= models_path(category: 'bicycle') %>" class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium">
+      자전거 모델 보기 →
+    </a>
+  </div>
+</div>
 </div>
