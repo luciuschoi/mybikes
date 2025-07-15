@@ -46,8 +46,16 @@
             <span class="px-3 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full text-sm font-medium">
               <%= @model.category == 'motorcycle' ? '오토바이' : '자전거' %>
             </span>
-            <%= link_to add_to_compare_path(@model), method: :post, 
-                class: "px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm" do %>
+            <!-- 즐겨찾기 버튼 -->
+            <button id="favorite-btn" 
+                    data-model-id="<%= @model.id %>"
+                    class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors <%= session[:favorites]&.include?(@model.id) ? 'text-red-500' : 'text-gray-400' %>">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"/>
+              </svg>
+            </button>
+            <%= button_to add_to_compare_path(@model), method: :post, 
+                class: "px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm border-0" do %>
               비교에 추가
             <% end %>
           </div>
@@ -178,5 +186,49 @@
     </div>
   </div>
 
-
 </div>
+
+<script>
+  // 즐겨찾기 토글 기능
+  document.addEventListener('DOMContentLoaded', function() {
+    const favoriteBtn = document.getElementById('favorite-btn');
+    if (favoriteBtn) {
+      favoriteBtn.addEventListener('click', function() {
+        const modelId = this.getAttribute('data-model-id');
+        
+        fetch(`/models/${modelId}/toggle_favorite`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+          }
+        })
+        .then(response => response.json())
+        .then(data => {
+          // 버튼 상태 업데이트
+          if (data.favorited) {
+            this.classList.remove('text-gray-400');
+            this.classList.add('text-red-500');
+          } else {
+            this.classList.remove('text-red-500');
+            this.classList.add('text-gray-400');
+          }
+          
+          // 알림 메시지 표시
+          const message = document.createElement('div');
+          message.className = 'fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg z-50';
+          message.textContent = data.message;
+          document.body.appendChild(message);
+          
+          setTimeout(() => {
+            message.remove();
+          }, 3000);
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('오류가 발생했습니다.');
+        });
+      });
+    }
+  });
+</script>

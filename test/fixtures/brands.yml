@@ -1,19 +1,49 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
-  logo: MyString
-  description: MyText
-  founded_year: 1
-  country: MyString
-  category: MyString
-  website: MyString
+honda:
+  name: Honda
+  country: Japan
+  description: 일본의 대표적인 오토바이 제조업체입니다.
+  founded_year: 1948
 
-two:
-  name: MyString
-  logo: MyString
-  description: MyText
-  founded_year: 1
-  country: MyString
-  category: MyString
-  website: MyString
+yamaha:
+  name: Yamaha
+  country: Japan
+  description: 일본의 유명한 오토바이 및 악기 제조업체입니다.
+  founded_year: 1955
+
+kawasaki:
+  name: Kawasaki
+  country: Japan
+  description: 일본의 대형 기업으로 오토바이 제조로 유명합니다.
+  founded_year: 1896
+
+suzuki:
+  name: Suzuki
+  country: Japan
+  description: 일본의 오토바이 및 자동차 제조업체입니다.
+  founded_year: 1909
+
+bmw:
+  name: BMW
+  country: Germany
+  description: 독일의 프리미엄 오토바이 제조업체입니다.
+  founded_year: 1916
+
+ducati:
+  name: Ducati
+  country: Italy
+  description: 이탈리아의 고성능 오토바이 제조업체입니다.
+  founded_year: 1926
+
+trek:
+  name: Trek
+  country: USA
+  description: 미국의 유명한 자전거 제조업체입니다.
+  founded_year: 1976
+
+specialized:
+  name: Specialized
+  country: USA
+  description: 미국의 혁신적인 자전거 제조업체입니다.
+  founded_year: 1974

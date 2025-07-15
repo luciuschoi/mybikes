@@ -20,38 +20,128 @@
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    
+    <!-- 애니메이션 CSS -->
+    <style>
+      .fade-in {
+        animation: fadeIn 0.5s ease-in-out;
+      }
+      
+      .slide-up {
+        animation: slideUp 0.6s ease-out;
+      }
+      
+      .scale-in {
+        animation: scaleIn 0.4s ease-out;
+      }
+      
+      .bounce-in {
+        animation: bounceIn 0.8s ease-out;
+      }
+      
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      
+      @keyframes slideUp {
+        from { 
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to { 
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      @keyframes scaleIn {
+        from { 
+          opacity: 0;
+          transform: scale(0.9);
+        }
+        to { 
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+      
+      @keyframes bounceIn {
+        0% { 
+          opacity: 0;
+          transform: scale(0.3);
+        }
+        50% { 
+          opacity: 1;
+          transform: scale(1.05);
+        }
+        70% { 
+          transform: scale(0.9);
+        }
+        100% { 
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+      
+      .hover-lift {
+        transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+      }
+      
+      .hover-lift:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      }
+      
+      .loading-spinner {
+        animation: spin 1s linear infinite;
+      }
+      
+      @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+    </style>
   </head>
 
   <body class="h-full bg-gray-50 dark:bg-gray-900">
     <!-- 헤더 -->
-    <header class="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
+    <header class="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
       <div class="container mx-auto px-4 py-4">
         <div class="flex items-center justify-between">
           <!-- 로고 -->
           <div class="flex items-center">
-            <a href="<%= root_path %>" class="text-2xl font-bold text-blue-600 dark:text-blue-400">
+            <a href="<%= root_path %>" class="text-2xl font-bold text-blue-600 dark:text-blue-400 hover:scale-105 transition-transform">
               MyBikes
             </a>
           </div>
           
           <!-- 네비게이션 -->
           <nav class="hidden md:flex items-center space-x-8">
-            <a href="<%= root_path %>" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+            <a href="<%= root_path %>" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors relative group">
               홈
+              <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 dark:bg-blue-400 transition-all group-hover:w-full"></span>
             </a>
-            <a href="<%= brands_path %>" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+            <a href="<%= brands_path %>" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors relative group">
               브랜드
+              <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 dark:bg-blue-400 transition-all group-hover:w-full"></span>
             </a>
-            <a href="<%= models_path %>" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+            <a href="<%= models_path %>" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors relative group">
               모델
+              <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 dark:bg-blue-400 transition-all group-hover:w-full"></span>
             </a>
-            <a href="<%= compare_path %>" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+            <a href="<%= favorites_models_path %>" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors relative group">
+              즐겨찾기
+              <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 dark:bg-blue-400 transition-all group-hover:w-full"></span>
+            </a>
+            <a href="<%= compare_path %>" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors relative group">
               비교
+              <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 dark:bg-blue-400 transition-all group-hover:w-full"></span>
             </a>
           </nav>
           
           <!-- 다크모드 토글 -->
-          <button id="theme-toggle" class="p-2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+          <button id="theme-toggle" class="p-2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-all hover:scale-110">
             <!-- 태양 아이콘 (라이트모드) -->
             <svg id="sun-icon" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
               <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"/>
@@ -74,20 +164,21 @@
     <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 mt-16">
       <div class="container mx-auto px-4 py-8">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div>
+          <div class="fade-in">
             <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">MyBikes</h3>
             <p class="text-gray-600 dark:text-gray-300">
               세계 유명 오토바이 및 자전거 브랜드 정보를 제공하는 포탈 사이트입니다.
             </p>
           </div>
-          <div>
+          <div class="fade-in" style="animation-delay: 0.1s;">
             <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">빠른 링크</h3>
             <ul class="space-y-2">
-              <li><a href="<%= brands_path %>" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">브랜드</a></li>
-              <li><a href="<%= models_path %>" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">모델</a></li>
+              <li><a href="<%= brands_path %>" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">브랜드</a></li>
+              <li><a href="<%= models_path %>" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">모델</a></li>
+              <li><a href="<%= compare_path %>" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">비교</a></li>
             </ul>
           </div>
-          <div>
+          <div class="fade-in" style="animation-delay: 0.2s;">
             <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">연락처</h3>
             <p class="text-gray-600 dark:text-gray-300">
               이메일: info@mybikes.com<br>
@@ -154,6 +245,36 @@
         console.log('Initial theme:', localStorage.theme || 'system');
         console.log('Dark mode active:', document.documentElement.classList.contains('dark'));
       });
+      
+      // 로딩 상태 관리
+      document.addEventListener('turbo:request-start', function() {
+        showLoading();
+      });
+      
+      document.addEventListener('turbo:request-end', function() {
+        hideLoading();
+      });
+      
+      function showLoading() {
+        const loading = document.createElement('div');
+        loading.id = 'loading-overlay';
+        loading.innerHTML = `
+          <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-white dark:bg-gray-800 rounded-lg p-6 flex items-center space-x-3">
+              <div class="loading-spinner w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full"></div>
+              <span class="text-gray-700 dark:text-gray-300">로딩 중...</span>
+            </div>
+          </div>
+        `;
+        document.body.appendChild(loading);
+      }
+      
+      function hideLoading() {
+        const loading = document.getElementById('loading-overlay');
+        if (loading) {
+          loading.remove();
+        }
+      }
     </script>
   </body>
 </html>

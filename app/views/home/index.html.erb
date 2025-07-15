@@ -1,6 +1,6 @@
 <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
   <!-- 히어로 섹션 -->
-  <div class="bg-gradient-to-br from-blue-700 via-blue-800 to-purple-800 dark:from-blue-900 dark:via-purple-900 dark:to-indigo-900 text-white py-16 rounded-lg mb-12 shadow-xl relative overflow-hidden">
+  <div class="bg-gradient-to-br from-blue-700 via-blue-800 to-purple-800 dark:from-blue-900 dark:via-purple-900 dark:to-indigo-900 text-white py-16 rounded-lg mb-12 shadow-xl relative overflow-hidden slide-up">
     <!-- 배경 패턴 -->
     <div class="absolute inset-0 bg-gradient-to-r from-blue-600/40 to-purple-600/40 dark:from-blue-800/50 dark:to-purple-800/50"></div>
     <!-- 추가 배경 효과 -->
@@ -21,15 +21,15 @@
 
 <!-- 통계 섹션 -->
 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 text-center">
+  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 text-center hover-lift fade-in" style="animation-delay: 0.2s;">
     <div class="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2"><%= Brand.count %></div>
     <div class="text-gray-700 dark:text-gray-300 font-medium">등록된 브랜드</div>
   </div>
-  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 text-center">
+  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 text-center hover-lift fade-in" style="animation-delay: 0.3s;">
     <div class="text-3xl font-bold text-green-600 dark:text-green-400 mb-2"><%= Model.count %></div>
     <div class="text-gray-700 dark:text-gray-300 font-medium">등록된 모델</div>
   </div>
-  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 text-center">
+  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 text-center hover-lift fade-in" style="animation-delay: 0.4s;">
     <div class="text-3xl font-bold text-purple-600 dark:text-purple-400 mb-2">2</div>
     <div class="text-gray-700 dark:text-gray-300 font-medium">카테고리</div>
   </div>

@@ -13,8 +13,20 @@ Rails.application.routes.draw do
   root "home#index"
   
   # 브랜드 및 모델 라우트
-  resources :brands, only: [:index, :show]
-  resources :models, only: [:index, :show]
+  resources :brands, only: [:index, :show] do
+    collection do
+      get :search
+    end
+  end
+  
+  resources :models, only: [:index, :show] do
+    member do
+      post :toggle_favorite
+    end
+    collection do
+      get :favorites
+    end
+  end
   
   # 비교 기능 라우트
   get 'compare', to: 'compare#index'

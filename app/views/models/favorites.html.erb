@@ -1,0 +1,143 @@
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+  <!-- 브레드크럼 -->
+  <div class="mb-6">
+    <nav class="flex" aria-label="Breadcrumb">
+      <ol class="inline-flex items-center space-x-1 md:space-x-3">
+        <li class="inline-flex items-center">
+          <%= link_to root_path, class: "inline-flex items-center text-sm font-medium text-gray-700 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400" do %>
+            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+            </svg>
+            홈
+          <% end %>
+        </li>
+        <li aria-current="page">
+          <div class="flex items-center">
+            <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+            </svg>
+            <span class="ml-1 text-sm font-medium text-gray-500 dark:text-gray-400 md:ml-2">즐겨찾기</span>
+          </div>
+        </li>
+      </ol>
+    </nav>
+  </div>
+
+  <!-- 헤더 -->
+  <div class="mb-8">
+    <div class="flex items-center justify-between">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">즐겨찾기</h1>
+        <p class="text-gray-600 dark:text-gray-400">
+          총 <span class="font-semibold text-blue-600 dark:text-blue-400"><%= @models.count %></span>개의 모델이 즐겨찾기에 등록되어 있습니다.
+        </p>
+      </div>
+      
+      <!-- 정렬 옵션 -->
+      <div class="flex items-center space-x-2">
+        <label for="sort" class="text-sm font-medium text-gray-700 dark:text-gray-300">정렬:</label>
+        <select id="sort" class="text-sm border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-1 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+          <option value="newest" <%= 'selected' if params[:sort] == 'newest' %>>최신순</option>
+          <option value="name" <%= 'selected' if params[:sort] == 'name' %>>이름순</option>
+          <option value="price" <%= 'selected' if params[:sort] == 'price' %>>가격순</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <% if @models && @models.any? %>
+    <!-- 모델 그리드 -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <% Array(@models).each_with_index do |model, index| %>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow fade-in" style="animation-delay: <%= index * 0.1 %>s;">
+          <div class="p-6">
+            <!-- 브랜드 정보 -->
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center space-x-2">
+                <div class="w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
+                  <span class="text-blue-600 dark:text-blue-400 font-bold text-sm"><%= model.brand.name.first %></span>
+                </div>
+                <span class="text-sm text-gray-600 dark:text-gray-400"><%= model.brand.name %></span>
+              </div>
+              <span class="px-2 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full text-xs">
+                <%= model.category == 'motorcycle' ? '오토바이' : '자전거' %>
+              </span>
+            </div>
+            
+            <!-- 모델 정보 -->
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2"><%= model.name %></h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-3"><%= model.year %>년 모델</p>
+            
+            <!-- 가격 -->
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xl font-bold text-green-600 dark:text-green-400"><%= model.price_formatted %></span>
+            </div>
+            
+            <!-- 액션 버튼 -->
+            <div class="flex items-center justify-between">
+              <%= link_to "상세보기", model_path(model), class: "text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 text-sm font-medium" %>
+              
+              <!-- 즐겨찾기 제거 버튼 -->
+              <button class="text-red-500 hover:text-red-700 transition-colors" 
+                      onclick="removeFavorite(<%= model.id %>)">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <!-- 빈 상태 -->
+    <div class="text-center py-12">
+      <div class="w-24 h-24 mx-auto mb-4 text-gray-300 dark:text-gray-600">
+        <svg fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"/>
+        </svg>
+      </div>
+      <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">즐겨찾기가 비어있습니다</h3>
+      <p class="text-gray-600 dark:text-gray-400 mb-6">관심 있는 모델을 즐겨찾기에 추가해보세요.</p>
+      <a href="/models" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+        모델 검색
+      </a>
+    </div>
+  <% end %>
+</div>
+
+<script>
+  // 정렬 변경 시 페이지 새로고침
+  document.getElementById('sort').addEventListener('change', function() {
+    const url = new URL(window.location);
+    url.searchParams.set('sort', this.value);
+    window.location.href = url.toString();
+  });
+  
+  // 즐겨찾기 제거 함수
+  function removeFavorite(modelId) {
+    if (confirm('즐겨찾기에서 제거하시겠습니까?')) {
+      fetch(`/models/${modelId}/toggle_favorite`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.favorited === false) {
+          // 페이지 새로고침
+          window.location.reload();
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('오류가 발생했습니다.');
+      });
+    }
+  }
+</script> 

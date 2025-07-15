@@ -135,8 +135,8 @@
             </span>
             
             <!-- 비교 버튼 -->
-            <%= link_to add_to_compare_path(model), method: :post, 
-                class: "text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 text-sm font-medium" do %>
+            <%= button_to add_to_compare_path(model), method: :post, 
+                class: "text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 text-sm font-medium border-0 bg-transparent p-0" do %>
               비교에 추가
             <% end %>
           </div>

@@ -1,27 +1,77 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
-  brand: one
-  year: 1
-  category: MyString
-  price: 9.99
-  engine_displacement: 1
-  weight: 9.99
-  fuel_type: MyString
-  transmission: MyString
-  colors: MyText
-  specifications: 
+cbr1000rr:
+  name: CBR1000RR
+  brand: honda
+  category: motorcycle
+  year: 2023
+  price: 25000000
+  engine_displacement: 1000
+  weight: 201
+  fuel_type: Gasoline
 
-two:
-  name: MyString
-  brand: two
-  year: 1
-  category: MyString
-  price: 9.99
-  engine_displacement: 1
-  weight: 9.99
-  fuel_type: MyString
-  transmission: MyString
-  colors: MyText
-  specifications: 
+ninja_zx10r:
+  name: Ninja ZX-10R
+  brand: kawasaki
+  category: motorcycle
+  year: 2023
+  price: 28000000
+  engine_displacement: 998
+  weight: 207
+  fuel_type: Gasoline
+
+r1:
+  name: YZF-R1
+  brand: yamaha
+  category: motorcycle
+  year: 2023
+  price: 27000000
+  engine_displacement: 998
+  weight: 199
+  fuel_type: Gasoline
+
+gsxr1000:
+  name: GSX-R1000
+  brand: suzuki
+  category: motorcycle
+  year: 2023
+  price: 26000000
+  engine_displacement: 999
+  weight: 202
+  fuel_type: Gasoline
+
+s1000rr:
+  name: S1000RR
+  brand: bmw
+  category: motorcycle
+  year: 2023
+  price: 32000000
+  engine_displacement: 999
+  weight: 197
+  fuel_type: Gasoline
+
+panigale_v4:
+  name: Panigale V4
+  brand: ducati
+  category: motorcycle
+  year: 2023
+  price: 35000000
+  engine_displacement: 1103
+  weight: 175
+  fuel_type: Gasoline
+
+domane_sl6:
+  name: Domane SL 6
+  brand: trek
+  category: bicycle
+  year: 2023
+  price: 3500000
+  weight: 8.5
+
+tarmac_sl7:
+  name: Tarmac SL7
+  brand: specialized
+  category: bicycle
+  year: 2023
+  price: 4200000
+  weight: 7.2

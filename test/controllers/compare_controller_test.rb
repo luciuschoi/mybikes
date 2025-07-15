@@ -1,23 +1,76 @@
 require "test_helper"
 
 class CompareControllerTest < ActionDispatch::IntegrationTest
+  setup do
+    @model1 = models(:cbr1000rr)
+    @model2 = models(:ninja_zx10r)
+  end
+
   test "should get index" do
-    get compare_index_url
+    get compare_url
     assert_response :success
+    assert_select "h1", "모델 비교"
   end
 
-  test "should get add" do
-    get compare_add_url
-    assert_response :success
+  test "should add model to compare" do
+    post add_to_compare_url(@model1)
+    assert_redirected_to compare_url
+    
+    # 세션에 추가되었는지 확인
+    assert_includes session[:compare_items], @model1.id
   end
 
-  test "should get remove" do
-    get compare_remove_url
-    assert_response :success
+  test "should not add more than 2 models to compare" do
+    # 첫 번째 모델 추가
+    post add_to_compare_url(@model1)
+    assert_redirected_to compare_url
+    
+    # 두 번째 모델 추가
+    post add_to_compare_url(@model2)
+    assert_redirected_to compare_url
+    
+    # 세 번째 모델 추가 시도 (실패해야 함)
+    third_model = models(:r1)
+    post add_to_compare_url(third_model)
+    assert_redirected_to compare_url
+    
+    # 세션에 2개만 있어야 함
+    assert_equal 2, session[:compare_items].length
   end
 
-  test "should get clear" do
-    get compare_clear_url
+  test "should remove model from compare" do
+    # 모델 추가
+    post add_to_compare_url(@model1)
+    
+    # 모델 제거
+    delete remove_from_compare_url(@model1)
+    assert_redirected_to compare_url
+    
+    # 세션에서 제거되었는지 확인
+    refute_includes session[:compare_items], @model1.id
+  end
+
+  test "should clear compare list" do
+    # 모델들 추가
+    post add_to_compare_url(@model1)
+    post add_to_compare_url(@model2)
+    
+    # 비교 목록 초기화
+    delete compare_url
+    assert_redirected_to compare_url
+    
+    # 세션이 비어있는지 확인
+    assert_nil session[:compare_items]
+  end
+
+  test "should show compare page with models" do
+    # 모델들 추가
+    post add_to_compare_url(@model1)
+    post add_to_compare_url(@model2)
+    
+    # 비교 페이지 확인
+    get compare_url
     assert_response :success
+    assert_select ".compare-item", 2
   end
 end
