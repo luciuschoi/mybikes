@@ -1,0 +1,168 @@
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+  <!-- 헤더 -->
+  <div class="mb-8">
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">모델 비교</h1>
+        <p class="text-gray-600 dark:text-gray-400">선택한 모델들의 스펙을 비교해보세요.</p>
+      </div>
+      
+      <% if @models.any? %>
+        <div class="flex items-center space-x-3 mt-4 sm:mt-0">
+          <%= link_to "모델 목록으로", models_path, class: "px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors" %>
+          <%= link_to "비교 목록 초기화", clear_compare_path, method: :delete, 
+              data: { confirm: '비교 목록을 초기화하시겠습니까?' },
+              class: "px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <% if @models.empty? %>
+    <!-- 비교할 모델이 없을 때 -->
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-12 text-center">
+      <div class="text-gray-400 dark:text-gray-500 mb-4">
+        <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+        </svg>
+      </div>
+      <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">비교할 모델이 없습니다</h3>
+      <p class="text-gray-600 dark:text-gray-300 mb-6">모델 목록에서 비교하고 싶은 모델을 선택해주세요.</p>
+      <%= link_to "모델 목록 보기", models_path, class: "inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors" %>
+    </div>
+  <% else %>
+    <!-- 비교 테이블 -->
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="w-full">
+          <thead class="bg-gray-50 dark:bg-gray-700">
+            <tr>
+              <th class="px-6 py-4 text-left text-sm font-medium text-gray-900 dark:text-white">스펙</th>
+              <% @models.each do |model| %>
+                <th class="px-6 py-4 text-left text-sm font-medium text-gray-900 dark:text-white">
+                  <div class="flex items-center justify-between">
+                    <div>
+                      <p class="font-semibold"><%= model.name %></p>
+                      <p class="text-xs text-gray-600 dark:text-gray-400"><%= model.brand.name %></p>
+                    </div>
+                    <%= link_to remove_from_compare_path(model), method: :delete, 
+                        class: "text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300" do %>
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                      </svg>
+                    <% end %>
+                  </div>
+                </th>
+              <% end %>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+            <!-- 가격 -->
+            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+              <td class="px-6 py-4 text-sm font-medium text-gray-900 dark:text-white">가격</td>
+              <% @models.each do |model| %>
+                <td class="px-6 py-4 text-sm text-gray-900 dark:text-white">
+                  <span class="font-semibold text-blue-600 dark:text-blue-400"><%= model.price_formatted %></span>
+                </td>
+              <% end %>
+            </tr>
+            
+            <!-- 연도 -->
+            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+              <td class="px-6 py-4 text-sm font-medium text-gray-900 dark:text-white">연도</td>
+              <% @models.each do |model| %>
+                <td class="px-6 py-4 text-sm text-gray-900 dark:text-white"><%= model.year %></td>
+              <% end %>
+            </tr>
+            
+            <!-- 카테고리 -->
+            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+              <td class="px-6 py-4 text-sm font-medium text-gray-900 dark:text-white">카테고리</td>
+              <% @models.each do |model| %>
+                <td class="px-6 py-4 text-sm text-gray-900 dark:text-white">
+                  <span class="px-2 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded text-xs font-medium">
+                    <%= model.category == 'motorcycle' ? '오토바이' : '자전거' %>
+                  </span>
+                </td>
+              <% end %>
+            </tr>
+            
+            <!-- 배기량 -->
+            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+              <td class="px-6 py-4 text-sm font-medium text-gray-900 dark:text-white">배기량</td>
+              <% @models.each do |model| %>
+                <td class="px-6 py-4 text-sm text-gray-900 dark:text-white">
+                  <%= model.engine_displacement.present? ? "#{model.engine_displacement}cc" : "N/A" %>
+                </td>
+              <% end %>
+            </tr>
+            
+            <!-- 무게 -->
+            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+              <td class="px-6 py-4 text-sm font-medium text-gray-900 dark:text-white">무게</td>
+              <% @models.each do |model| %>
+                <td class="px-6 py-4 text-sm text-gray-900 dark:text-white">
+                  <%= model.weight.present? ? "#{model.weight}kg" : "N/A" %>
+                </td>
+              <% end %>
+            </tr>
+            
+            <!-- 연료 -->
+            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+              <td class="px-6 py-4 text-sm font-medium text-gray-900 dark:text-white">연료</td>
+              <% @models.each do |model| %>
+                <td class="px-6 py-4 text-sm text-gray-900 dark:text-white">
+                  <%= model.fuel_type.present? ? model.fuel_type : "N/A" %>
+                </td>
+              <% end %>
+            </tr>
+            
+            <!-- 브랜드 -->
+            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+              <td class="px-6 py-4 text-sm font-medium text-gray-900 dark:text-white">브랜드</td>
+              <% @models.each do |model| %>
+                <td class="px-6 py-4 text-sm text-gray-900 dark:text-white">
+                  <%= link_to model.brand.name, brand_path(model.brand), 
+                      class: "text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300" %>
+                </td>
+              <% end %>
+            </tr>
+            
+            <!-- 국가 -->
+            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+              <td class="px-6 py-4 text-sm font-medium text-gray-900 dark:text-white">국가</td>
+              <% @models.each do |model| %>
+                <td class="px-6 py-4 text-sm text-gray-900 dark:text-white"><%= model.brand.country %></td>
+              <% end %>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 상세 정보 링크 -->
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+      <% @models.each do |model| %>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4"><%= model.name %></h3>
+          <div class="space-y-3 mb-4">
+            <div class="flex justify-between">
+              <span class="text-gray-600 dark:text-gray-400">브랜드</span>
+              <span class="font-medium text-gray-900 dark:text-white"><%= model.brand.name %></span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-600 dark:text-gray-400">가격</span>
+              <span class="font-medium text-blue-600 dark:text-blue-400"><%= model.price_formatted %></span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-600 dark:text-gray-400">연도</span>
+              <span class="font-medium text-gray-900 dark:text-white"><%= model.year %></span>
+            </div>
+          </div>
+          <%= link_to "상세 정보 보기", model_path(model), 
+              class: "block w-full text-center bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors" %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

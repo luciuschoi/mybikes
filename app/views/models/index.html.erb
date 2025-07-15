@@ -1,4 +1,162 @@
-<div>
-  <h1 class="font-bold text-4xl">Models#index</h1>
-  <p>Find me in app/views/models/index.html.erb</p>
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+  <!-- 검색 및 필터링 섹션 -->
+  <div class="bg-white dark:bg-gray-800 shadow-sm rounded-lg p-6 mb-8">
+    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">모델 검색</h2>
+    
+    <%= form_with url: models_path, method: :get, local: true, class: "space-y-6" do |form| %>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <!-- 검색어 입력 -->
+        <div class="md:col-span-2">
+          <%= form.label :search, "검색어", class: "block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" %>
+          <%= form.text_field :search, 
+              value: params[:search], 
+              placeholder: "모델명, 브랜드명으로 검색...",
+              class: "w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white" %>
+        </div>
+        
+        <!-- 카테고리 필터 -->
+        <div>
+          <%= form.label :category, "카테고리", class: "block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" %>
+          <%= form.select :category, 
+              options_for_select([
+                ['전체', ''],
+                ['오토바이', 'motorcycle'],
+                ['자전거', 'bicycle']
+              ], params[:category]),
+              {},
+              class: "w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white" %>
+        </div>
+        
+        <!-- 브랜드 필터 -->
+        <div>
+          <%= form.label :brand_id, "브랜드", class: "block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" %>
+          <%= form.select :brand_id, 
+              options_from_collection_for_select(Brand.all, :id, :name, params[:brand_id]),
+              { prompt: '브랜드 선택' },
+              class: "w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white" %>
+        </div>
+      </div>
+      
+      <!-- 추가 필터 -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <!-- 연도 범위 -->
+        <div>
+          <%= form.label :year_from, "연도 (시작)", class: "block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" %>
+          <%= form.number_field :year_from, 
+              value: params[:year_from], 
+              min: 1900, 
+              max: Date.current.year,
+              class: "w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white" %>
+        </div>
+        
+        <div>
+          <%= form.label :year_to, "연도 (끝)", class: "block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" %>
+          <%= form.number_field :year_to, 
+              value: params[:year_to], 
+              min: 1900, 
+              max: Date.current.year,
+              class: "w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white" %>
+        </div>
+        
+        <!-- 가격 범위 -->
+        <div>
+          <%= form.label :price_from, "가격 (시작)", class: "block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" %>
+          <%= form.number_field :price_from, 
+              value: params[:price_from], 
+              min: 0,
+              step: 1000000,
+              class: "w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white" %>
+        </div>
+        
+        <div>
+          <%= form.label :price_to, "가격 (끝)", class: "block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" %>
+          <%= form.number_field :price_to, 
+              value: params[:price_to], 
+              min: 0,
+              step: 1000000,
+              class: "w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white" %>
+        </div>
+      </div>
+      
+      <!-- 버튼 그룹 -->
+      <div class="flex flex-col sm:flex-row gap-3">
+        <%= form.submit "검색", class: "px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors" %>
+        <%= link_to "초기화", models_path, class: "px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors text-center" %>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- 검색 결과 헤더 -->
+  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+    <div>
+      <h1 class="text-3xl font-bold text-gray-900 dark:text-white">모델 목록</h1>
+      <% if params[:search].present? || params[:category].present? || params[:brand_id].present? %>
+        <p class="text-gray-600 dark:text-gray-400 mt-2">
+          검색 결과: <%= @models.total_count %>개 모델
+        </p>
+      <% end %>
+    </div>
+    
+    <!-- 정렬 옵션 -->
+    <div class="flex items-center space-x-4 mt-4 sm:mt-0">
+      <span class="text-sm text-gray-600 dark:text-gray-400">정렬:</span>
+      <%= link_to "최신순", models_path(sort: 'newest'), 
+          class: "text-sm #{params[:sort] == 'newest' ? 'text-blue-600 dark:text-blue-400 font-medium' : 'text-gray-600 dark:text-gray-400'} hover:text-blue-600 dark:hover:text-blue-400" %>
+      <%= link_to "가격순", models_path(sort: 'price'), 
+          class: "text-sm #{params[:sort] == 'price' ? 'text-blue-600 dark:text-blue-400 font-medium' : 'text-gray-600 dark:text-gray-400'} hover:text-blue-600 dark:hover:text-blue-400" %>
+      <%= link_to "이름순", models_path(sort: 'name'), 
+          class: "text-sm #{params[:sort] == 'name' ? 'text-blue-600 dark:text-blue-400 font-medium' : 'text-gray-600 dark:text-gray-400'} hover:text-blue-600 dark:hover:text-blue-400" %>
+    </div>
+  </div>
+
+  <!-- 모델 그리드 -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    <% @models.each do |model| %>
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+        <div class="p-6">
+          <!-- 브랜드 정보 -->
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-sm text-gray-600 dark:text-gray-400 font-medium"><%= model.brand.name %></span>
+            <span class="text-xs text-gray-600 dark:text-gray-400"><%= model.year %></span>
+          </div>
+          
+          <!-- 모델명 -->
+          <h3 class="font-semibold text-gray-900 dark:text-white mb-3 text-lg"><%= model.name %></h3>
+          
+          <!-- 가격 -->
+          <div class="text-lg font-bold text-blue-600 dark:text-blue-400 mb-3">
+            <%= model.price_formatted %>
+          </div>
+          
+          <!-- 카테고리 태그 -->
+          <div class="flex items-center justify-between mb-4">
+            <span class="px-3 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full text-xs font-medium">
+              <%= model.category == 'motorcycle' ? '오토바이' : '자전거' %>
+            </span>
+            
+            <!-- 비교 버튼 -->
+            <%= link_to add_to_compare_path(model), method: :post, 
+                class: "text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 text-sm font-medium" do %>
+              비교에 추가
+            <% end %>
+          </div>
+          
+          <!-- 상세 정보 링크 -->
+          <a href="<%= model_path(model) %>" 
+             class="block w-full text-center bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors">
+            상세 정보
+          </a>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- 페이지네이션 -->
+  <% if @models.respond_to?(:total_pages) && @models.total_pages > 1 %>
+    <div class="mt-8 flex justify-center">
+      <%= paginate @models, theme: 'tailwind' %>
+    </div>
+  <% end %>
 </div>
+
+
