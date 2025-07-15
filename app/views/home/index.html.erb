@@ -1,0 +1,66 @@
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-3xl font-bold text-gray-900 mb-8">Rails 8 + Tailwind CSS 4 + Flowbite 프로젝트</h1>
+  
+  <!-- Flowbite 버튼 예시 -->
+  <div class="mb-8">
+    <h2 class="text-xl font-semibold mb-4">Flowbite 버튼 예시</h2>
+    <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">기본 버튼</button>
+    <button type="button" class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">대체 버튼</button>
+  </div>
+  
+  <!-- Flowbite 모달 예시 -->
+  <div class="mb-8">
+    <h2 class="text-xl font-semibold mb-4">Flowbite 모달 예시</h2>
+    <button data-modal-target="default-modal" data-modal-toggle="default-modal" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+      모달 열기
+    </button>
+
+    <!-- 모달 -->
+    <div id="default-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative p-4 w-full max-w-2xl max-h-full">
+            <!-- 모달 내용 -->
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <!-- 모달 헤더 -->
+                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                        기본 모달
+                    </h3>
+                    <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="default-modal">
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                        </svg>
+                        <span class="sr-only">모달 닫기</span>
+                    </button>
+                </div>
+                <!-- 모달 바디 -->
+                <div class="p-4 md:p-5 space-y-4">
+                    <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                        이것은 Flowbite 모달 예시입니다. Rails 8, Tailwind CSS 4, 그리고 Flowbite가 제대로 작동하고 있습니다.
+                    </p>
+                    <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                        SQLite3 데이터베이스, importmap, 그리고 propshaft를 사용하여 자원을 관리하고 있습니다.
+                    </p>
+                </div>
+                <!-- 모달 푸터 -->
+                <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+                    <button data-modal-hide="default-modal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">수락</button>
+                    <button data-modal-hide="default-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">거부</button>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  
+  <!-- 프로젝트 설정 정보 -->
+  <div class="bg-gray-100 rounded-lg p-6">
+    <h2 class="text-xl font-semibold mb-4">프로젝트 설정</h2>
+    <ul class="space-y-2 text-gray-700">
+      <li>✅ Rails 8</li>
+      <li>✅ Tailwind CSS 4</li>
+      <li>✅ Flowbite Plugin</li>
+      <li>✅ SQLite3 Database</li>
+      <li>✅ Importmap</li>
+      <li>✅ Propshaft</li>
+    </ul>
+  </div>
+</div>
