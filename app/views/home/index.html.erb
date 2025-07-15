@@ -5,108 +5,114 @@
     <div class="absolute inset-0 bg-gradient-to-r from-blue-600/40 to-purple-600/40 dark:from-blue-800/50 dark:to-purple-800/50"></div>
     <!-- 추가 배경 효과 -->
     <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent dark:from-black/30 dark:to-transparent"></div>
-          <div class="relative z-10 text-center">
-        <h1 class="text-4xl md:text-6xl font-bold mb-4 text-white drop-shadow-lg dark:drop-shadow-xl">MyBikes</h1>
-        <p class="text-xl md:text-2xl mb-8 text-white drop-shadow-md dark:drop-shadow-lg">세계 유명 오토바이 및 자전거 브랜드 정보 포탈</p>
-              <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <a href="<%= brands_path %>" class="bg-white dark:bg-gray-800 text-blue-600 dark:text-blue-400 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors shadow-lg">
-            브랜드 둘러보기
-          </a>
-          <a href="<%= models_path %>" class="bg-white/10 dark:bg-gray-800/20 backdrop-blur-sm border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 dark:hover:bg-gray-700 dark:hover:text-blue-300 transition-colors shadow-lg">
-            모델 검색하기
-          </a>
-        </div>
+    <div class="relative z-10 text-center">
+      <h1 class="text-4xl md:text-6xl font-bold mb-4 text-white drop-shadow-lg dark:drop-shadow-xl">MyBikes</h1>
+      <p class="text-xl md:text-2xl mb-8 text-white drop-shadow-md dark:drop-shadow-lg">세계 유명 오토바이 및 자전거 브랜드 정보 포탈</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="<%= brands_path %>" class="bg-white dark:bg-gray-800 text-blue-600 dark:text-blue-400 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors shadow-lg">
+          브랜드 둘러보기
+        </a>
+        <a href="<%= models_path %>" class="bg-white/10 dark:bg-gray-800/20 backdrop-blur-sm border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 dark:hover:bg-gray-700 dark:hover:text-blue-300 transition-colors shadow-lg">
+          모델 검색하기
+        </a>
+      </div>
     </div>
   </div>
 
-<!-- 통계 섹션 -->
-<div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 text-center hover-lift fade-in" style="animation-delay: 0.2s;">
-    <div class="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2"><%= Brand.count %></div>
-    <div class="text-gray-700 dark:text-gray-300 font-medium">등록된 브랜드</div>
+  <!-- 통계 섹션 -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 text-center hover-lift fade-in" style="animation-delay: 0.2s;">
+      <div class="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2"><%= Brand.count %></div>
+      <div class="text-gray-700 dark:text-gray-300 font-medium">등록된 브랜드</div>
+    </div>
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 text-center hover-lift fade-in" style="animation-delay: 0.3s;">
+      <div class="text-3xl font-bold text-green-600 dark:text-green-400 mb-2"><%= Model.count %></div>
+      <div class="text-gray-700 dark:text-gray-300 font-medium">등록된 모델</div>
+    </div>
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 text-center hover-lift fade-in" style="animation-delay: 0.4s;">
+      <div class="text-3xl font-bold text-purple-600 dark:text-purple-400 mb-2">2</div>
+      <div class="text-gray-700 dark:text-gray-300 font-medium">카테고리</div>
+    </div>
   </div>
-  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 text-center hover-lift fade-in" style="animation-delay: 0.3s;">
-    <div class="text-3xl font-bold text-green-600 dark:text-green-400 mb-2"><%= Model.count %></div>
-    <div class="text-gray-700 dark:text-gray-300 font-medium">등록된 모델</div>
-  </div>
-  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 text-center hover-lift fade-in" style="animation-delay: 0.4s;">
-    <div class="text-3xl font-bold text-purple-600 dark:text-purple-400 mb-2">2</div>
-    <div class="text-gray-700 dark:text-gray-300 font-medium">카테고리</div>
-  </div>
-</div>
 
-<!-- 인기 브랜드 섹션 -->
-<div class="mb-12">
-  <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">인기 브랜드</h2>
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    <% Brand.limit(6).each do |brand| %>
-      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-        <div class="p-6">
-          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2"><%= brand.name %></h3>
-          <p class="text-gray-700 dark:text-gray-300 text-sm mb-4 leading-relaxed"><%= brand.description %></p>
-          <div class="flex items-center justify-between">
-            <span class="text-sm text-gray-600 dark:text-gray-400 font-medium"><%= brand.country %></span>
-            <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-xs font-medium">
-              <%= brand.category == 'motorcycle' ? '오토바이' : '자전거' %>
-            </span>
+  <!-- 브랜드 섹션 -->
+  <div class="mb-12">
+    <div class="flex items-center justify-between mb-6">
+      <h2 class="text-2xl font-bold text-gray-900 dark:text-white">인기 브랜드</h2>
+      <a href="<%= brands_path %>" class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium">
+        전체 보기 →
+      </a>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <% Brand.limit(4).each_with_index do |brand, index| %>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow fade-in" style="animation-delay: <%= index * 0.1 %>s;">
+          <div class="p-6">
+            <div class="flex items-center space-x-3 mb-4">
+              <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center">
+                <span class="text-blue-600 dark:text-blue-400 font-bold text-lg"><%= brand.name.first %></span>
+              </div>
+              <div>
+                <h3 class="font-semibold text-gray-900 dark:text-white"><%= brand.name %></h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400"><%= brand.country %></p>
+              </div>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-sm text-gray-600 dark:text-gray-400"><%= brand.models.count %>개 모델</span>
+              <a href="<%= brand_path(brand) %>" class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 text-sm font-medium">
+                보기
+              </a>
+            </div>
           </div>
-          <a href="<%= brand_path(brand) %>" class="block mt-4 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium">
-            자세히 보기 →
-          </a>
         </div>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
   </div>
-</div>
 
-<!-- 최신 모델 섹션 -->
-<div class="mb-12">
-  <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">최신 모델</h2>
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-    <% Model.includes(:brand).recent.limit(8).each do |model| %>
-      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-        <div class="p-4">
-          <div class="flex items-center justify-between mb-2">
-            <span class="text-xs text-gray-600 dark:text-gray-400 font-medium"><%= model.brand.name %></span>
-            <span class="text-xs text-gray-600 dark:text-gray-400 font-medium"><%= model.year %></span>
+  <!-- 최신 모델 섹션 -->
+  <div class="mb-12">
+    <div class="flex items-center justify-between mb-6">
+      <h2 class="text-2xl font-bold text-gray-900 dark:text-white">최신 모델</h2>
+      <a href="<%= models_path %>" class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium">
+        전체 보기 →
+      </a>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <% Model.includes(:brand).order(created_at: :desc).limit(8).each_with_index do |model, index| %>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow fade-in" style="animation-delay: <%= index * 0.1 %>s;">
+          <div class="p-6">
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center space-x-2">
+                <div class="w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
+                  <span class="text-blue-600 dark:text-blue-400 font-bold text-sm"><%= model.brand.name.first %></span>
+                </div>
+                <span class="text-sm text-gray-600 dark:text-gray-400"><%= model.brand.name %></span>
+              </div>
+              <span class="px-2 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full text-xs">
+                <%= model.category == 'motorcycle' ? '오토바이' : '자전거' %>
+              </span>
+            </div>
+            
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2"><%= model.name %></h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-3"><%= model.year %>년 모델</p>
+            
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xl font-bold text-green-600 dark:text-green-400"><%= model.price_formatted %></span>
+            </div>
+            
+            <div class="flex items-center justify-between">
+              <a href="<%= model_path(model) %>" class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 text-sm font-medium">
+                상세보기
+              </a>
+              
+              <!-- 비교 버튼 -->
+              <%= button_to add_to_compare_path(model), method: :post, 
+                  class: "text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 text-sm font-medium border-0 bg-transparent p-0" do %>
+                비교에 추가
+              <% end %>
+            </div>
           </div>
-          <h3 class="font-semibold text-gray-900 dark:text-white mb-2"><%= model.name %></h3>
-          <div class="flex items-center justify-between">
-            <span class="text-sm text-gray-700 dark:text-gray-300 font-medium">
-              <%= model.price_formatted %>
-            </span>
-            <span class="px-2 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded text-xs font-medium">
-              <%= model.category == 'motorcycle' ? '오토바이' : '자전거' %>
-            </span>
-          </div>
-          <a href="<%= model_path(model) %>" class="block mt-3 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 text-sm font-medium">
-            상세 정보 →
-          </a>
         </div>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
   </div>
-</div>
-
-<!-- 카테고리별 안내 -->
-<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">🏍️ 오토바이</h3>
-    <p class="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">
-      스포츠 바이크부터 크루저까지, 다양한 오토바이 브랜드와 모델을 만나보세요.
-    </p>
-    <a href="<%= models_path(category: 'motorcycle') %>" class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium">
-      오토바이 모델 보기 →
-    </a>
-  </div>
-  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">🚴 자전거</h3>
-    <p class="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">
-      로드 바이크부터 MTB까지, 최고의 자전거 브랜드와 모델을 확인하세요.
-    </p>
-    <a href="<%= models_path(category: 'bicycle') %>" class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium">
-      자전거 모델 보기 →
-    </a>
-  </div>
-</div>
 </div>

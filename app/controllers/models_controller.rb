@@ -6,7 +6,7 @@ class ModelsController < ApplicationController
     if params[:search].present?
       search_term = "%#{params[:search]}%"
       @models = @models.joins(:brand).where(
-        "models.name ILIKE ? OR brands.name ILIKE ?", 
+        "models.name LIKE ? OR brands.name LIKE ?", 
         search_term, search_term
       )
     end
@@ -78,34 +78,53 @@ class ModelsController < ApplicationController
     respond_to do |format|
       format.html { redirect_back(fallback_location: model_path(@model), notice: message) }
       format.json { render json: { favorited: favorites.include?(@model.id), message: message } }
+      format.turbo_stream do
+        if request.referer&.include?('/models/favorites')
+          # 즐겨찾기 페이지에서 호출된 경우
+          render turbo_stream: [
+            turbo_stream.update("favorites-container", partial: "models/favorites_list", locals: { models: get_favorites_models }),
+            turbo_stream.update("flash-messages", partial: "shared/flash_message", locals: { message: message, type: "success" })
+          ]
+        else
+          # 다른 페이지에서 호출된 경우
+          render turbo_stream: [
+            turbo_stream.replace("favorite-btn", partial: "models/favorite_button", locals: { model: @model }),
+            turbo_stream.update("flash-messages", partial: "shared/flash_message", locals: { message: message, type: "success" })
+          ]
+        end
+      end
     end
   end
 
   def favorites
-    # 임시로 세션 무시하고 빈 배열로 처리
+    @models = get_favorites_models
+  end
+
+  private
+
+  def get_favorites_models
     favorites = []
-    @models = []
-    
-    # 디버깅용 로그
-    Rails.logger.debug "Using empty favorites array for debugging"
+    models = []
     
     # 실제 세션 데이터가 있다면 사용
     if session[:favorites].is_a?(Array)
       favorites = session[:favorites].select { |id| id.to_s =~ /\A\d+\z/ }.map(&:to_i).uniq
-      @models = Model.includes(:brand).where(id: favorites).to_a
+      models = Model.includes(:brand).where(id: favorites).to_a
     end
     
     if params[:sort].present?
       case params[:sort]
       when 'name'
-        @models = @models.sort_by(&:name)
+        models = models.sort_by(&:name)
       when 'price'
-        @models = @models.sort_by(&:price)
+        models = models.sort_by(&:price)
       when 'newest'
-        @models = @models.sort_by(&:year).reverse
+        models = models.sort_by(&:year).reverse
       end
     else
-      @models = @models.sort_by(&:created_at).reverse
+      models = models.sort_by(&:created_at).reverse
     end
+    
+    models
   end
 end

@@ -10,7 +10,9 @@
       
       <% if @models.any? %>
         <div class="flex items-center space-x-3 mt-4 sm:mt-0">
-          <%= link_to "모델 목록으로", models_path, class: "px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors" %>
+          <%= link_to "모델 목록으로", models_path, 
+              data: { turbo_frame: "_top" },
+              class: "px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors" %>
           <%= button_to clear_compare_path, method: :delete, 
               data: { confirm: '비교 목록을 초기화하시겠습니까?' },
               class: "px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors" do %>
@@ -31,7 +33,9 @@
       </div>
       <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">비교할 모델이 없습니다</h3>
       <p class="text-gray-600 dark:text-gray-300 mb-6">모델 목록에서 비교하고 싶은 모델을 선택해주세요.</p>
-      <%= link_to "모델 목록 보기", models_path, class: "inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors" %>
+      <%= link_to "모델 목록 보기", models_path, 
+          data: { turbo_frame: "_top" },
+          class: "inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors" %>
     </div>
   <% else %>
     <!-- 비교 테이블 -->
@@ -126,6 +130,7 @@
               <% @models.each do |model| %>
                 <td class="px-6 py-4 text-sm text-gray-900 dark:text-white">
                   <%= link_to model.brand.name, brand_path(model.brand), 
+                      data: { turbo_frame: "_top" },
                       class: "text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300" %>
                 </td>
               <% end %>
@@ -163,6 +168,7 @@
             </div>
           </div>
           <%= link_to "상세 정보 보기", model_path(model), 
+              data: { turbo_frame: "_top" },
               class: "block w-full text-center bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors" %>
         </div>
       <% end %>
